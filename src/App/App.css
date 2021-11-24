@@ -1,0 +1,177 @@
+.App {
+  text-align: center;
+  min-height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #000000;
+  background-color: #f4f5fc;
+  vertical-align: middle;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.bolas{
+  display: grid;
+      grid-template-columns: auto;
+      justify-content: center;
+      grid-gap: 150px;
+      grid-template-columns: auto auto auto;
+      min-height: 200px;
+      min-width: 100%;
+      
+}
+
+.bola{
+  border-radius: 87px;
+  background-color: #282c34;
+  height: 80px;
+  width: 80px;
+  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.bola img{
+  height: 50px;
+  border-radius: 87px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+  background-color: #a9b0be;
+}
+
+.btAcesso {
+  background-color: pink;
+  border-style: outset;
+  border-radius: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.card {
+  text-align: center;
+  min-height: 300px;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-color: #f9fafc;
+  padding: 0px;
+}
+
+.cardsBox {
+      display: grid;
+      grid-template-columns: auto;
+      justify-content: center;
+      grid-gap: 40px;
+      padding: 0px;
+
+}
+
+.pag {
+   margin-top: 70px;
+   margin-bottom: 0px;
+   padding: 0px;
+
+}
+
+.boxBranca 
+{
+  padding: 0px;
+
+  margin-bottom: 70px;
+}
+
+.video {
+
+  background-color: rgb(224, 208, 208);
+  width: 836px;
+  height: 322px;
+
+}
+
+.textoDois {
+
+font-size: small;
+
+
+}
+
+.linkTemp {
+  text-decoration: none;
+  color: #000;
+  padding: 5px;
+  margin-top: 131px;
+  text-align: center;
+
+}
+#triangulo-para-direita {
+  width: 0; 
+  height: 0; 
+  align-content: center;
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  border-left: 40px solid #4C4B63;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 120px;  
+}
+
+.textoSM {
+  
+  font-size: medium;
+  align-content: center;
+  font-family: 'Montserrat', sans-serif;
+  justify-content: center;
+    
+    
+
+
+}
+
+.divCont {
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-evenly;
+
+}

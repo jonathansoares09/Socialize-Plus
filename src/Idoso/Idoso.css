@@ -1,0 +1,87 @@
+.divCont {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+    margin-top: 40px;
+  
+  }
+
+  .pag {
+      margin-top: 100px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .divBusca{
+    display: grid;
+    grid-column: auto auto;
+    grid-template-columns: auto 10px;
+    background-color:#E0EEEE;
+    border:solid 0px #5F9EA0;
+    border-radius:0px;
+    width:0px;
+  }
+  
+  #txtBusca{
+    float:left;
+    background-color:transparent;
+    padding-left:5px;
+    font-size:18px;
+    border-style: none  none solid none; 
+        height:32px;
+    width: 800px;
+  }
+  
+  #btnBusca{
+    border:none;
+    float:left;
+ 
+    
+  }
+  
+  .divBusca img{
+   
+    float:left;
+    width: 100%;
+    height: 100%;
+  }
+
+  .faixa {
+    display: table-cell;
+    vertical-align: middle;    
+    width: 20%;
+    height: 40px;
+    background-color: #9DCFDD;
+    position: relative; 
+    border-radius: 0px 15px 15px 0px;
+    text-align:left;
+    align-content: center;
+    padding-left: 30px;
+    font-size: large;
+  }
+ 
+  .faixaD {
+    display: table-cell;
+    vertical-align: middle;    
+    width: 20%;
+    height: 40px;
+    background-color: #9DCFDD;
+    position: relative; 
+    border-radius: 0px 15px 15px 0px;
+    text-align:left;
+    align-content: center;
+    padding-left: 30px;
+    font-size: large;
+  }
+  .faixaTres {
+    display: table-cell;
+    vertical-align: middle;    
+    width: 20%;
+    height: 40px;
+    background-color: #9DCFDD;
+    position: relative; 
+    border-radius: 0px 15px 15px 0px;
+    text-align:left;
+    align-content: center;
+    padding-left: 30px;
+    font-size: large;
+}

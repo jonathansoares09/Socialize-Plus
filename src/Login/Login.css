@@ -1,0 +1,88 @@
+.pag {
+
+    margin-top: 70px;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.containerDuplo {
+
+  display: grid;
+  grid-template-columns: auto 50%;
+  justify-content: space-evenly;
+  margin-bottom: 30px;
+  margin-top: 100px;
+}
+
+.imgEstilo {
+
+  border-radius: 0px 30px 0px 30px;
+
+}
+
+
+/* form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+} */
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 300%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 300%;
+  background-color: #f44336;
+  align-items: center;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+  display: grid;
+
+}
+
+
+.btnDiv {
+  display: grid;
+  grid-template-columns: auto auto;
+ align-content: center;
+ justify-content: space-evenly;
+justify-items: center;
+}
+
+.centro {
+
+  display: block;
+    margin-left: auto;
+    margin-right: auto 
+}
