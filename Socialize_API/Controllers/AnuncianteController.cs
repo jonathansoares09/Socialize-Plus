@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Socialize_API.Data;
 using Socialize_API.Models;
+using Socialize_API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Socialize_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
 
     public class AnuncianteController : Controller
@@ -19,14 +21,14 @@ namespace Socialize_API.Controllers
             //Construtor
             _context = context;
         }
-        
+
         [HttpGet]
         public ActionResult<List<Anunciante>> GetAll()
         {
             return _context.Anunciantes.ToList();
         }
 
-        [HttpGet("{AnuncianteId}")] // Requisições GET com parâmetro
+        [HttpGet("anunciante/{AnuncianteId}")] // Requisições GET com parâmetro
         public ActionResult<List<Anunciante>> Get(int AnuncianteId)
         {
          try
@@ -43,7 +45,41 @@ namespace Socialize_API.Controllers
          }
         }
 
+        // [HttpPost]
+        // [Route("login")]
+        // public async Task<ActionResult<dynamic>> Authenticate([FromBody] Anunciante model) 
+        // { 
+        //     var anunciante = _context.Anunciantes.Where(a => a.Email == model.Email && a.Senha == model.Senha).FirstOrDefault(); 
+ 
+        //     if (anunciante == null) 
+        //         return NotFound(new { message = "Usuário ou senha inválidos" }); 
+ 
+        //     var token = TokenService.GenerateToken(anunciante); 
+        //     anunciante.Senha = "";
+        //     return new 
+        //     { 
+        //         anunciante = anunciante,
+        //         token = token 
+        //     }; 
+        // }
+
+        [HttpGet]
+        [Route("anunciante/authenticated")]
+        [Authorize]
+        // public string Authenticated() => String.Format("Autenticado - {0}", Usuario.Identity.Email);
+
+        [HttpGet]
+        [Route("login/idoso")]
+        [Authorize(Roles = "idoso")]
+        public string Employee() => "Idoso";
+
+        [HttpGet]
+        [Route("login/anunciante")]
+        [Authorize(Roles = "anunciante")]
+        public string Manager() => "Anunciante";
+
         [HttpPost]
+        [Route("anunciante")]
         public async Task<ActionResult> post(Anunciante model) // O parâmetro model traZ a estrutura do Usuario (todos campos)
         {
             try {
@@ -61,7 +97,7 @@ namespace Socialize_API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{AnuncianteId}")]
+        [HttpPut("anunciante/{AnuncianteId}")]
         public async Task<ActionResult> put(int AnuncianteId, Anunciante dadosAnuncianteAlt)
         {
             try {
@@ -87,6 +123,7 @@ namespace Socialize_API.Controllers
                 result.Uf = dadosAnuncianteAlt.Uf;
                 result.Cep = dadosAnuncianteAlt.Cep;
                 result.Ativo = dadosAnuncianteAlt.Ativo;
+                result.Perfil = dadosAnuncianteAlt.Perfil;
 
 
                 await _context.SaveChangesAsync();
@@ -97,7 +134,7 @@ namespace Socialize_API.Controllers
             }
         }
 
-        [HttpDelete("{AnuncianteId}")]
+        [HttpDelete("anunciante{AnuncianteId})")]
         public async Task<ActionResult> delete(int AnuncianteId)
         {
             try{
@@ -116,6 +153,5 @@ namespace Socialize_API.Controllers
             }
         }
 
-        
     }
 }

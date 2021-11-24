@@ -20,7 +20,6 @@ namespace Socialize_API.Models
         public string mesNasc { get; set; }
         public string anoNasc { get; set; }
         public string Ativo { get; set; }
-
         public string Perfil { get; set; }
     }
 }

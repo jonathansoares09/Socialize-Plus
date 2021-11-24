@@ -114,6 +114,7 @@ function getListaAtualizada(usuario, add = true) {
 function carregarUsuarios(){
   axios(urlAPI).then(resp => {
       setUsuarios(resp.data);
+      
   })
 }
 

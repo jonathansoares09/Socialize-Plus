@@ -1,252 +1,262 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ApiReceitaWs from './ApiReceitaWs';
 import axios from 'axios';
 import Main from '../components/template/Main';
-import AnuncianteFuncao from './AnuncianteFuncao';
+import { withStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+import Checkbox from "@material-ui/core/Checkbox";
+import FlashMessage from './FlashMessage';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const urlAPI = "http://localhost:5000/api/anunciante";
 
-const initialState = { 
-  anunciante: { id: '', nomeTitular: '', email: '', emailContato:'', senha:'', cpfTitular:'', razaoSocial:'',cnpj:'',nomeFantasia:'', inscricaoEstadual:'',
-  telefone:'', endereco:'', numEndereco:'', bairro: '', cidade: '', uf: '', cep: '', ativo:''}, 
-  lista: []  
-}
+const AnuncianteForm = () => {
 
-// const [id, setId] = useState(0);
-// const [nomeTitular, setNomeTitular] = useState('');
-// const [email, setEmail] = useState('');
-// const [emailContato, setEmailContato] = useState('');
-// const [senha, setSenha] = useState('');
-// const [cpfTitular, setCpfTitular] = useState('');
-// const [razaoSocial, setRazaoSocial] = useState('');
-// const [cnpj, setCnpj] = useState('');
-// const [nomeFantasia, setNomeFantasia] = useState('');
-// const [inscricaoEstadual, setInscricaoEstadual] = useState('');
-// const [telefone, setTelefone] = useState('');
-// const [endnereco, setEndereco] = useState('');
-// const [numEndereco, setNumEndereco] = useState('');
-// const [bairro, setBairro] = useState('');
-// const [cidade, setCidade] = useState('');
-// const [uf, setUf] = useState('');
-// const [cep, setCep] = useState('');
-// const [ativo, setAtivo] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState('');
 
-export default class AnuncianteForm extends Component {
+  const [id, setId] = useState(0);
+  const [nomeTitular, setNomeTitular] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailContato, setEmailContato] = useState('');
+  const [senha, setSenha] = useState('');
+  const [cpfTitular, setCpfTitular] = useState('');
+  const [razaoSocial, setRazaoSocial] = useState('');
+  const [cnpj, setCnpj] = useState('');
+  const [nomeFantasia, setNomeFantasia] = useState('');
+  const [inscricaoEstadual, setInscricaoEstadual] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [endereco, setEndereco] = useState('');
+  const [numEndereco, setNumEndereco] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
+  const [cep, setCep] = useState('');
+  const [ativo, setAtivo] = useState('');
+  const [perfil, setPerfil] = useState('anunciante');
+  const [anunciante, setAnunciante] = useState({});
+  const [anunciantes, setAnunciantes] = useState([{}]);
 
-  state = { ...initialState } // Estado inicial
+  const handleClickShowPassword = () => {
+    setSenha({
+      ...state,
+      showPassword: !setSenha.showPassword,
+    });
+  };
+  
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     nomeEmpresa: ' ',
-  //     termos: false,
-  //   };
+  const GreenCheckbox = withStyles({
+    root: {
+      color: green[400],
+      "&$checked": {
+        color: green[600],
+      },
+    },
+    checked: {},
+  })((props) => <Checkbox color="default" {...props} />);
 
-  //   this.handleInputChange = this.handleInputChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
 
-  async componentDidMount(){
-    const response = await ApiReceitaWs.get("27865757000102");
-    console.log(response.data);
+  const [state, setState] = useState({
+    checkedA: true,
+    checkedB: true,
+    checkedF: true,
+    checkedG: true,
+  });
 
-    axios(urlAPI).then(resp => { 
-      this.setState({ lista: resp.data }) 
-  })
+  useEffect(() => {
+    carregarAnunciantes();
+  }, []);
+
+  function limpar() {
+    setNomeTitular(''); setEmail(''); setSenha(''); setSenha({senha: ''}); setCpfTitular(''); setRazaoSocial(''); setCnpj('');
+    setNomeFantasia(''); setInscricaoEstadual(''); setTelefone(''); setEndereco(''); setNumEndereco(''); setBairro('');
+    setCidade(''); setUf(''); setCep(''); setAtivo(''); setEmailContato(''); setPerfil('');
   }
-
-  limpar() {
-    this.setState({ anunciante: initialState.anunciante});
-   }
   
-  salvar(e) {
-    e.preventDefault();
-    const anunciante = this.state.anunciante;
-    anunciante.id = Number(anunciante.id);
-    const metodo = anunciante.id ? 'put' : 'post'; //Verificação do método a ser usado pela existência ou não do valor de ID.
-    const url = anunciante.id ? `${urlAPI}/${anunciante.id}` : urlAPI; 
+  function salvar() {
+    const newAnunciante = {id: id, nomeTitular: nomeTitular, email: email, senha:senha, cpfTitular: cpfTitular, razaoSocial: razaoSocial, cnpj: cnpj, nomeFantasia: nomeFantasia, 
+    inscricaoEstadual: inscricaoEstadual, telefone: telefone, endereco: endereco, numEndereco: numEndereco, bairro: bairro, cidade: cidade, uf: uf, cep: cep, ativo:ativo, emailContato: emailContato, perfil: perfil};
+    const metodo = newAnunciante.id !== 0 ? 'put' : 'post'; //Verificação do método a ser usado pela existência ou não do valor de ID.
+    const url = newAnunciante.id ? `${urlAPI}/${newAnunciante.id}` : urlAPI;
   
-    axios[metodo](url, anunciante)
-    .then(resp => {
-        const lista = this.getListaAtualizada(resp.data)
-        this.setState({ anunciante: initialState.anunciante, lista })
-    })
+      axios[metodo](url, newAnunciante).then(resp => {
+          const lista = getListaAtualizada(resp.data)
+          console.log("metodo: " + metodo);
+          console.log("retorno: " + resp.data);
+          setAnunciante(newAnunciante);
+          setAnunciantes(lista);
+      });
+      setSuccess(true);
+      limpar();
   }
   
-  getListaAtualizada(anunciante, add = true) {
-    const lista = this.state.lista.filter(a => a.id !== anunciante.id);
+  function getListaAtualizada(anunciante, add = true) {
+    const lista = anunciantes.filter(a => a.id !== anunciante.id);
     if (add) lista.unshift(anunciante);
     
     return lista;
   }
   
-  atualizaCampo(event) {
-    //clonar usuário a partir do state, para não alterar o state diretamente
-    const anunciante = { ...this.state.anunciante };
-    //usar o atributo NAME do input identificar o campo a ser atualizado
-    anunciante[event.target.name] = event.target.value;
-    //atualizar o state
-    this.setState({ anunciante });
-  }
-  
-  carregar(anunciante) {
-    this.setState({anunciante})
+  function carregarAnunciantes(){
+    axios(urlAPI).then(resp => {
+        setAnunciantes(resp.data);
+        
+    })
   }
 
-  // handleInputChange(event) {
-  //   const target = event.target;
-  //   const value = target.type === 'checkbox' ? target.checked : target.value;
-  //   const name = target.name;
-
-  //   this.setState({
-  //     [name]: value
-  //   });
+  // function carregar(anunciante){
+  //   setId(anunciante.id); setNomeTitular(anunciante.nomeTitular) // terminar
   // }
 
-  // handleSubmit(event) {
-  //   const { nomeEmpresa } = this.state;
-  //   alert('Sua empresa' + nomeEmpresa + 'foi enviada para análise, aguarde nosso retorno em seu email');
-  //   event.preventDefault();
-  // }
-
-  renderForm() {
+  function renderForm() {
     return (
-      <form onSubmit={e=>this.salvar(e)}>
-       <div>
+      <form onSubmit={e=>salvar(e)}>
         <div class="container">
-          <label htmlFor="nomeFantasia">
-            <b>Nome Fantasia</b>
-          </label>
-          <input
-            type="text"
-            id="nomeFantasia"
-            name="nomeFantasia"
-            placeholder="Nome Fantasia"
-            value={this.state.anunciante.nomeFantasia}
-            onChange={ e => this.atualizaCampo(e)}
-            required
-          />
-            
-          <label htmlFor="email">
-            <b>Email</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Email"
-            name="email"
-            id="email"
-            value={this.state.anunciante.email}
-            onChange={ e => this.atualizaCampo(e)}  
-            required
-          />
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+              <InputLabel htmlFor="component-outlined">Nome Fantasia</InputLabel>
+              <OutlinedInput
+                required
+                id="component-outlined"
+                value={nomeFantasia}
+                onChange={ e => {setNomeFantasia(e.target.value)}}
+                label="Nome Fantasia"
+              />
+            </FormControl>
+
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+              <InputLabel htmlFor="component-outlined">CEP</InputLabel>
+              <OutlinedInput
+                required
+                id="component-outlined"
+                value={cep}
+                onChange={ e => {setCep(e.target.value)}}
+                label="CEP"
+              />
+            </FormControl>
+
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+              <InputLabel htmlFor="component-outlined">CNPJ</InputLabel>
+              <OutlinedInput
+                required
+                id="component-outlined"
+                value={cnpj}
+                onChange={ e => {setCnpj(e.target.value)}}
+                label="CNPJ"
+              />
+            </FormControl>
+
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+              <InputLabel htmlFor="component-outlined">E-mail</InputLabel>
+              <OutlinedInput
+                required
+                id="component-outlined"
+                value={email}
+                onChange={ e => {setEmail(e.target.value)}}
+                label="E-mail"
+              />
+            </FormControl>
           
-          <label htmlFor="senha">
-         <b>Senha</b>
-          </label>
-          <input
-          type="password"
-          placeholder="Senha"
-          name="senha"
-          id="senha"
-          value={this.state.anunciante.senha}
-          onChange={ e => this.atualizaCampo(e)}
-          required
-          />
-
-          <label htmlFor="cep">
-          <b>Cep</b>
-          </label>
-          <input
-            type="text"
-            placeholder="CEP"
-            name="cep"
-            id="cep"
-            value={this.state.anunciante.cep}
-            onChange={e => this.atualizaCampo(e)}
-            required
-          />
-
-            <label for="cnpj">
-            <b>CNPJ</b>
-            </label>
-            <input
-              type="text"
-              placeholder="CNPJ"
-              name="cnpj"
-              value={this.state.anunciante.cnpj}
-              onChange={ e => this.atualizaCampo(e)}
-              required
-            />
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+              <OutlinedInput id="outlined-adornment-password"
+                type={senha.showPassword ? 'text' : 'password'}
+                value={senha.senha}
+                onChange={ e => {setSenha(e.target.value)}}
+                endAdornment={
+                  <InputAdornment position="end">
+                      <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} 
+                      onMouseDown={handleMouseDownPassword} edge="end">
+                        {senha.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                  </InputAdornment>
+                }
+                label="Senha"
+              />
+            </FormControl>
           
           </div>
 
           <div class="container">
           <h3> Dados do Proprietario </h3>
-            <label htmlFor="nomeTitular">
-              <b>Nome Completo</b>
-            </label>
-            <input
-              type="text"
-              placeholder="Nome e sobrenome"
-              name="nomeTitular"
-              id="nomeTitular"
-              value={this.state.anunciante.nomeTitular}
-              onChange={ e => this.atualizaCampo(e)}
-              required
-            />
+            <FormControl style={{marginBottom: '15px'}} variant="outlined">
+                <InputLabel htmlFor="component-outlined">Nome Completo</InputLabel>
+                <OutlinedInput
+                  required
+                  id="component-outlined"
+                  value={nomeTitular}
+                  onChange={ e => {setNomeTitular(e.target.value)}}
+                  label="Nome Completo"
+                />
+              </FormControl>
             
-          <label htmlFor="emailContato">
-            <b>Email de Contato</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Email de Contato"
-            name="emailContato"
-            id="emailContato"
-            value={this.state.anunciante.emailContato}
-            onChange={ e => this.atualizaCampo(e)}
-            required 
-          />
+              <FormControl style={{marginBottom: '15px'}} variant="outlined">
+                <InputLabel htmlFor="component-outlined">E-mail de Contato</InputLabel>
+                <OutlinedInput
+                  required
+                  id="component-outlined"
+                  value={emailContato}
+                  onChange={ e => {setEmailContato(e.target.value)}}
+                  label="E-mail de Contato"
+                />
+              </FormControl>
 
-          <label htmlFor="cpfTitular">
-          <b>Cpf</b>
-          </label>
-          <input
-            type="text"
-            placeholder="CPF"
-            name="cpfTitular"
-            id="cpfTitular"
-            value={this.state.anunciante.cpfTitular}
-            onChange={ e => this.atualizaCampo(e)}
-            required
-          />
+              <FormControl style={{marginBottom: '15px'}} variant="outlined">
+                <InputLabel htmlFor="component-outlined">CPF</InputLabel>
+                <OutlinedInput
+                  required
+                  id="component-outlined"
+                  value={cpfTitular}
+                  onChange={ e => {setCpfTitular(e.target.value)}}
+                  label="CPF"
+                />
+              </FormControl>
 
-            <label htmlFor="telefone">
-            <b>Celular com DDD</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Telefone"
-            name="telefone"
-            id="telefone"
-            value={this.state.anunciante.telefone}
-            onChange={ e => this.atualizaCampo(e)}
-            required
+              <FormControl style={{marginBottom: '15px'}} variant="outlined">
+                <InputLabel htmlFor="component-outlined">Celular</InputLabel>
+                <OutlinedInput
+                  required
+                  id="component-outlined"
+                  value={telefone}
+                  onChange={ e => {setTelefone(e.target.value)}}
+                  label="Celular com DDD"
+                />
+              </FormControl>
+
+            <FormControlLabel
+            style={{marginBottom: 0}}
+            control={
+              <Checkbox
+                checked={state.checkedA}
+                onChange={handleChange}
+                name="checkedA"
+              />
+            }
+            label="Aceito todos os termos"
           />
-              </div>
-              <button type="submit">Enviar</button>
+          <p style={{fontSize: '12px', marginBottom: '15px', marginTop: 0, color: '#606770'}}>Ao clicar em Cadastre-se, você concorda com nossos Termos, Política de Dados e Política de Cookies. Você poderá receber notificações por SMS e cancelar isso quando quiser.</p>
+          <button type="submit" style={{fontWeight: 'bold'}}>Cadastre-se</button>
         </div>
+        {success ? <FlashMessage message={message}/> : ''}
       </form>
     );
   }
 
-  render() {
     return (
-      <Main>
-      <AnuncianteFuncao />
-       {this.renderForm()}
-      </Main>
+      // <AnuncianteFuncao />
+       renderForm()
     )
-  }
-
 }
+export default AnuncianteForm;

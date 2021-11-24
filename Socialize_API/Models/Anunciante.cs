@@ -20,7 +20,6 @@ namespace Socialize_API.Models
         public string Uf { get; set; }
         public string Cep { get; set; }
         public string Ativo { get; set; }
-
         public string Perfil { get; set; }
     }
 }
