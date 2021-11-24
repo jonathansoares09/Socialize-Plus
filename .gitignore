@@ -1,0 +1,4 @@
+node_modules/
+node_modules/.cache/
+src/Anunciante/AnuncianteFuncao2
+src/components/Formulario/formularioDeCadastro2
