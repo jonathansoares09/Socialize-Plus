@@ -6,7 +6,7 @@ import Anunciante from "./Anunciante/Anunciante";
 import Cadastro from "./Cadastro/Cadastro";
 import Login from "./Login/Login";
 import InicioUsuario from "./components/template/InicioUsuario";
-import Evento from "./Evento/Evento";
+import CadastroEvento from "./Evento/CadastroEvento";
 import RecuperaSenha from "./components/Formulario/RecuperaSenha";
 import CadastroAnunciante from "./Anunciante/CadastroAnunciante";
 
@@ -19,7 +19,7 @@ export default function Routes() {
       <Route path="/login" component={Login} />
       <Route path="/recuperarSenha" component={RecuperaSenha} />
       <Route path="/cadastroAnunciante" component={CadastroAnunciante} />
-      <Route path="/evento" component={Evento} />
+      <Route path="/cadastroEvento" component={CadastroEvento} />
       <Redirect from="*" to="/" />
     </Switch>
   );

@@ -39,6 +39,14 @@ namespace Socialize_API
             ); 
             services.AddControllers();
             services.AddCors();
+            // services.AddCors(options =>
+            // {
+            //     options.AddPolicy("Policy1", builder => {
+            //         builder.WithOrigins("http://localhost:3000/")
+            //         .WithMethods("POST", "GET", "PUT", "DELETE")
+            //         .WithHeaders(HeaderNames.ContentType);
+            //     });
+            // });
 
             //////////////////////////////////////// 
             // Autenticação 
@@ -80,7 +88,7 @@ namespace Socialize_API
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -89,6 +97,11 @@ namespace Socialize_API
 
             // Adicionando o serviço Cors para contornar o problema de ter 2 servidores (Asp.net e ReactJS):
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            // if (env.IsDevelopment()){
+            //     app.UseDeveloperExceptionPage();
+            // }
+            // app.UseCors("Policy1");
 
             app.UseEndpoints(endpoints =>
             {

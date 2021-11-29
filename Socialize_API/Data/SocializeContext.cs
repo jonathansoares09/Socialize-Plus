@@ -10,6 +10,7 @@ namespace Socialize_API.Data
     
     public DbSet<Usuario> Usuarios {get; set;} // Classe Usuario sendo persistida <Usuario>, na tabela Usuario
     public DbSet<Anunciante> Anunciantes {get; set;}
+    public DbSet<Evento> Eventos {get; set;}
 
     } 
 }

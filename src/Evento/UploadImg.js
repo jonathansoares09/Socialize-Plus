@@ -28,7 +28,6 @@ function UploadImg() {
       {status.type === 'error'? <p style={{color: "#ff0000"}}>{status.mensagem}</p> : ""}
 
       <form onSubmit={uploadImage} className = "formularioImagem" >
-        <label>Fotos do Evento: </label>
         <input type="file" name="image" onChange={e => setImage(e.target.files[0])} /><br /><br />
 
       </form>
